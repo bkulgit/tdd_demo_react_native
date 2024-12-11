@@ -6,6 +6,7 @@ import 'react-native';
 import React from 'react';
 import {fireEvent, render} from "@testing-library/react-native"
 import {describe,test,expect} from '@jest/globals';
+import StringCalculator from '../ScreenCalculator/StringCalculator';
 
 describe("Unit test case for setring calculator ",()=>{
   test("String Calculator component should render ",()=>{
