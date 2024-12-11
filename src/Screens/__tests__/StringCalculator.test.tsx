@@ -33,7 +33,7 @@ describe("Unit test case for setring calculator ",()=>{
 
     fireEvent.changeText(userInputView,"");
     fireEvent.press(addButtonView);
-    expect(resultTextView.props.children).toContain("The String result is: 0");
+    expect(resultTextView.props.children).toContain("The result is: 0");
   });
   test("displays the same value in result for single digit input",()=>{
     const {getByTestId} = render(<StringCalculator/>);
@@ -94,6 +94,6 @@ describe("Unit test case for setring calculator ",()=>{
 
     fireEvent.changeText(userInputView,"1,2,-3,-2");
     fireEvent.press(addButtonView);
-    expect(resultTextView.props.children).toContain("negative numbers not allowed: -3 , -2");
+    expect(resultTextView.props.children).toContain("negative numbers not allowed: -3,-2");
   });
 });

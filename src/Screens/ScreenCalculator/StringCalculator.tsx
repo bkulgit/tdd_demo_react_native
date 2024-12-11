@@ -1,12 +1,49 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
 
 const StringCalculator = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [resultValue, setResultValue] = useState<number>(0);
+  const [negativeValues,setShowNegativeValue] =  useState< string>("");
+
+  const checkNegativeNumbers = (): string[] => {
+    let negativeNumInput: string[] = userInput.split(',').filter((num: string) => {
+      let parsedValue = parseInt(num);
+      if (parsedValue < 0) {
+        console.log('The number is negative.');
+        return true;
+      } else {
+        console.log('The number is non-negative.');
+        return false;
+      }
+    });
+    return negativeNumInput;
+  };  
 
   const onAddButtonClick = () => {
-   //TODO: changes for add string values
+
+  // check for empty input
+   if(userInput.length == 0 ){
+    setResultValue(0);
+   };
+
+   // check for negative numbers
+   const noOfNegativeInputes = checkNegativeNumbers();
+   if(noOfNegativeInputes.length > 0){
+    let negativeNumbers = noOfNegativeInputes.join(",");
+    setShowNegativeValue(negativeNumbers);
+    return;
+   }
+
+   const userInputListArray:string[] = userInput.split(",");
+   let sum = 0;
+   for (let i = 0; i < userInputListArray.length; i++) {
+    const trimmedString = userInputListArray[i].trim();
+    if (trimmedString.length > 0) {
+     sum = sum + parseInt(userInputListArray[i]);
+     setResultValue(sum);
+    }
+   }
   };
 
   return (
@@ -20,7 +57,7 @@ const StringCalculator = () => {
         keyboardType="numeric"
       />
       <Button testID={"add-button-view"} title="Add" onPress={onAddButtonClick} />
-      <Text testID={'string-calculator-result-view'} style={styles.resultText}>{`The result is: ${resultValue}`}</Text>
+      <Text testID={'string-calculator-result-view'} style={styles.resultText}>{negativeValues.length > 0  ? `negative numbers not allowed: ${negativeValues}` : `The result is: ${resultValue}`}</Text>
     </View>
   );
 };
